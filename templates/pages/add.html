@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+ {% block content %}
+ {% include 'partes/sidebar.html' %}
+
+ <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+ 
+<h3 class="mx-5 pt-3">Add product</h3>
+<div class="container-fluid pt-3">
+  <form  method="post" enctype="multipart/form-data" id="form_add_product" >
+    {% csrf_token %}
+    <div class="previews"></div>
+
+    <input class="form-control mb-4" name="name" placeholder="Name" multiple />
+    <select
+      name="category"
+      class="form-select mb-4"
+      aria-label="Default select example"
+    >
+      <option selected>select category</option>
+      {% for cat in category %}
+      <option>{{cat.name}}</option>
+      {% endfor %}
+    </select>
+    <input
+      class="form-control mb-4"
+      type="number"
+      name="price1"
+      placeholder="Price 1"
+    />
+    <input
+      class="form-control mb-4"
+      type="number"
+      name="price2"
+      placeholder="Price 2"
+    />
+    <input
+      class="form-control mb-4"
+      type="number"
+      name="quantity"
+      placeholder="quantity"
+    />
+    <input
+      class="form-control mb-4"
+      name="description"
+      placeholder="description"
+    />
+   
+    <input
+      class="btn btn-outline-success btn-sm w-25"
+      type="submit"
+      placeholder="add"
+    />
+  </form>
+   
+</div>
+{% endblock content %}
