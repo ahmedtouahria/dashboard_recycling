@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'partes/sidebar.html' %}
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+
+<div class="container-fluid py-4">
+  <h5 class="my-4">Products of Vendeur : {{vendeur}}</h5>
+    <div class="row">
+      {% for product in products %}
+      <div class="col-6 col-md-3 card" >
+        <img src="{{product.photo.url}}" class="card-img-top w-100" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{product.name}}</h5>
+          <p class="card-text">Quantity : {{product.quantity}} Kg</p>
+          <p class="card-text">Phone : {{product.user.phone}}</p>
+
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+   
+  </div>
+{% endblock content %}

@@ -152,40 +152,53 @@
               </div>
             </div>
             <div class="card-body">
-              <form role="form text-left">
+              <form role="form text-left" method="post">
+                {% csrf_token %}
                 <div class="mb-3">
                   <input
+                  required
+                    name="username"
                     type="text"
                     class="form-control"
-                    placeholder="Name"
+                    placeholder="username"
                     aria-label="Name"
-                    aria-describedby="email-addon"
+                    aria-describedby="phone-addon"
+                    minlength="5"
+
                   />
                 </div>
                 <div class="mb-3">
                   <input
-                    type="email"
+                  required
+                    name="phone"
+                    type="phone"
                     class="form-control"
-                    placeholder="Email"
-                    aria-label="Email"
-                    aria-describedby="email-addon"
+                    placeholder="phone"
+                    aria-label="phone"
+                    aria-describedby="phone-addon"
+                    maxlength="13"
+                    minlength="10"
+
                   />
                 </div>
                 <div class="mb-3">
                   <input
+                  required
+                  name="password"
                     type="password"
                     class="form-control"
                     placeholder="Password"
                     aria-label="Password"
                     aria-describedby="password-addon"
+                    minlength="8"
+
                   />
                 </div>
                 <div class="mb-3">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select name="type" class="form-select" aria-label="Default select example">
+                        <option selected>Select your type </option>
+                        <option value="is_mp_client">Client</option>
+                        <option value="is_deche_vendeur">Vendeur</option>
                       </select>
                 </div>
                 <div class="form-check form-check-info text-left">
@@ -206,7 +219,7 @@
                 </div>
                 <div class="text-center">
                   <button
-                    type="button"
+                    type="submit"
                     class="btn bg-gradient-dark w-100 my-4 mb-2"
                   >
                     Sign up

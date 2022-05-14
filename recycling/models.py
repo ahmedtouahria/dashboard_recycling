@@ -90,6 +90,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         return self.active
 
 class Product(models.Model):
+    user=models.ForeignKey(Customer,on_delete=models.CASCADE,null=True)
     name=models.CharField(max_length=120)
     quantity=models.IntegerField(default=0)
     price=models.FloatField(default=0.0)
@@ -102,6 +103,7 @@ class Product(models.Model):
         return self.name
 
 class MatierPremier(models.Model):
+    user=models.ForeignKey(Customer,on_delete=models.CASCADE,null=True)
     name=models.CharField(max_length=120)
     quantity=models.IntegerField(default=0)
     price=models.FloatField(default=0.0)
@@ -110,3 +112,5 @@ class MatierPremier(models.Model):
     @property
     def get_total(self):
         return self.price*self.quantity
+    def __str__(self):
+        return self.name
