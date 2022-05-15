@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+ {% block content %}
+ {% include 'partes/sidebar.html' %}
+
+ <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+ 
+<h3 class="mx-5 pt-3">MP Order</h3>
+<div class="container-fluid pt-3">
+  <form  method="post" enctype="multipart/form-data" id="form_add_product" >
+    {% csrf_token %}
+    <div class="previews"></div>
+    <input
+      class="form-control mb-4"
+      type="number"
+      name="quantity"
+      placeholder="quantity"
+    />
+
+    <input
+      class="btn btn-outline-success btn-sm w-25"
+      type="submit"
+      placeholder="add"
+    />
+  </form>
+   
+</div>
+{% endblock content %}

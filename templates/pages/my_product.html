@@ -168,7 +168,7 @@
             <h5 class="card-title">{{product.name}}</h5>
             <p class="card-text">Quantity : {{product.quantity}} Kg</p>
             <p class="card-text">Phone : {{product.user.phone}}</p>
-            <a href="tel:{{product.user.phone}}" type="tel" class="btn btn-primary">order <i class="fa fa-cart-plus mx-1"></i></a>
+            <a href="{% url 'mp_order' product.id  %}"  class="btn btn-primary">order <i class="fa fa-cart-plus mx-1"></i></a>
           </div>
         </div>
         {% endfor %}

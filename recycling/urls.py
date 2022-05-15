@@ -8,8 +8,10 @@ urlpatterns = [
     
     path("add/",add,name="add"),
     path("my_product/",myproduct,name="my_product"),
+    path("my_product/<int:pk>/order",mp_order,name="mp_order"),
     path("products/v=<int:pk>",products,name="products"),
     path("products/p=<int:pk>/edit",edit_product,name="product_edit"),
+    
     
 
     

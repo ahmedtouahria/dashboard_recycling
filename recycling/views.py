@@ -1,7 +1,7 @@
 import json
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout, authenticate
-from recycling.models import Customer, MatierPremier, Product
+from recycling.models import Contrat, Customer, MatierPremier, Product
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Avg, Count, Min, Sum
@@ -14,8 +14,10 @@ from django.core.serializers.json import DjangoJSONEncoder
 def home(request):
     today_mony = Product.objects.aggregate(total_price=Sum('price'))
     today_profit = Product.objects.aggregate(total_price=Sum('price'))
+    all_orders=Contrat.objects.filter(enterprise=request.user).count()
     new_order = Customer.objects.filter(
         created_at__day=date.today().day).count()
+    quantity_stock_admin=MatierPremier.objects.aggregate(all_quantity=Sum('quantity'))
     new_clients = Customer.objects.filter(
         created_at__day=date.today().day).count()
     num_users = Customer.objects.all().count()
@@ -30,7 +32,7 @@ def home(request):
     )
     as_json = json.dumps(list(chart_data), cls=DjangoJSONEncoder)
     vendeurs = Customer.objects.filter(is_deche_vendeur=True)
-
+    orders=Contrat.objects.filter(enterprise=request.user)
     context = {
         "vendeurs": vendeurs,
         "chart_data": as_json,
@@ -42,6 +44,9 @@ def home(request):
         "num_partners": num_users,
         "num_orders": num_orders,
         "num_products": num_products,
+        "orders":orders,
+        "all_orders":all_orders,
+        "quantity_stock_admin":quantity_stock_admin
     }
     return render(request, "pages/index.html", context)
 
@@ -52,15 +57,17 @@ def register(request):
         phone = request.POST['phone']
         password = request.POST['password']
         type = request.POST["type"]
+        address = request.POST["address"]
+        
         if username and phone and password is not None:
             if username and phone and password != "":
                 if type == "is_mp_client":
                     customer = Customer(
-                        name=username, phone=phone, password=password, is_mp_client=True)
+                        name=username, phone=phone, password=password, is_mp_client=True,address=address)
                     customer.save()
                 elif type == "is_mp_client":
                     customer = Customer(
-                        name=username, phone=phone, password=password, is_deche_vendeur=True)
+                        name=username, phone=phone, password=password, is_deche_vendeur=True,address=address)
                     customer.save()
                 login(request, customer)
                 return redirect("home")
@@ -202,3 +209,14 @@ def edit_product(request, pk):
             messages.error(request, "Error ")
     context = {"product": product,"mp":mp}
     return render(request, "pages/edit_product.html", context)
+@login_required(login_url="login")
+def mp_order(request,pk):
+    mp=MatierPremier.objects.get(id=pk)
+    entreprise=request.user
+    if request.method=="POST":
+        quantity=request.POST.get("quantity")
+        total=mp.price*float(quantity)
+        contrat=Contrat(enterprise=entreprise,matier=mp,quantity=quantity,total_price=total)
+        contrat.save()
+        return redirect("home")
+    return render(request,"pages/demand_mp.html")

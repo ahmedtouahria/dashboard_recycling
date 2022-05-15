@@ -121,4 +121,6 @@ class Contrat(models.Model):
     matier=models.ForeignKey(MatierPremier,on_delete=models.CASCADE)
     quantity=models.IntegerField(default=0)
     total_price=models.FloatField(default=0.0)
-    
+    date=models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return str(self.id)

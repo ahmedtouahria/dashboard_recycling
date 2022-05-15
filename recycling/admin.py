@@ -4,3 +4,6 @@ from .models import *
 admin.site.register(Customer)
 admin.site.register(Product)
 admin.site.register(MatierPremier)
+admin.site.register(Contrat)
+
+
