@@ -15,8 +15,7 @@
           <h5 class="card-title">{{product.name}}</h5>
           <p class="card-text">Quantity : {{product.quantity}} Kg</p>
           <p class="card-text">Phone : {{product.user.phone}}</p>
-
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <a href="tel:{{product.user.phone}}" type="tel" class="btn btn-primary">call <i class="fa fa-phone mx-3"></i></a>
         </div>
       </div>
       {% endfor %}

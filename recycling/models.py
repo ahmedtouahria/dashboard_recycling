@@ -55,6 +55,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
         max_length=100, blank=False, null=False, validators=[MinLengthValidator(8)])
     is_deche_vendeur = models.BooleanField(default=False)
     is_mp_client = models.BooleanField(default=False)
+    address=models.CharField(max_length=120,null=True)
     active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
@@ -114,3 +115,10 @@ class MatierPremier(models.Model):
         return self.price*self.quantity
     def __str__(self):
         return self.name
+
+class Contrat(models.Model):
+    enterprise=models.ForeignKey(Customer,on_delete=models.CASCADE)
+    matier=models.ForeignKey(MatierPremier,on_delete=models.CASCADE)
+    quantity=models.IntegerField(default=0)
+    total_price=models.FloatField(default=0.0)
+    

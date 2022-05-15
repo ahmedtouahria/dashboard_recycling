@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+ {% block content %}
+ {% include 'partes/sidebar.html' %}
+
+ <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+ 
+<h3 class="mx-5 pt-3">Edit product</h3>
+<div class="container-fluid pt-3">
+  <form  method="post"  id="form_add_product" >
+    {% csrf_token %}
+    <div class="previews"></div>
+    <input
+    value="{% if user.is_admin %}{{mp.name}}{% else %}{{product.name}}{% endif %}
+    "
+     class="form-control mb-4" name="name" placeholder="Name" multiple />
+
+    <input
+    value="{% if user.is_admin %}{{mp.price}}{% else %}{{product.price}}{% endif %}"
+      class="form-control mb-4"
+      type="number"
+      name="price"
+      placeholder="Price "
+    />
+    <input
+    value="{% if user.is_admin %}{{mp.quantity}}{% else %}{{product.quantity}}{% endif %}"
+      class="form-control mb-4"
+      type="number"
+      name="quantity"
+      placeholder="quantity"
+    />
+    <input
+    type="file"
+      class="form-control mb-4"
+      name="image"
+      placeholder="image"
+    />
+   
+    <input
+      class="btn btn-outline-success btn-sm w-25"
+      type="submit"
+      placeholder="add"
+    />
+  </form>
+   
+</div>
+{% endblock content %}
